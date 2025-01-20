@@ -3,25 +3,30 @@ package linkedlist
 import (
 	"errors"
 	"fmt"
-	"strings"
 )
 
-//insert, remove, search, concatenate
+// also make method concatenate
 
 type SinglyLinkedList struct {
 	head *Node
 	length int
 }
 
+// Node struct has a data any type and
+// next pointer
 type Node struct {
 	data any
 	next *Node
 }
 
+// New returns a newly created singly linked list
+// with default values.
 func New() *SinglyLinkedList {
 	return &SinglyLinkedList{nil, 0}
 }
 
+// Insert inserts a newly created node at the 
+// head of a linked list.
 func (sl *SinglyLinkedList) Insert(v any) {
 	n := &Node{v, nil}
 	
@@ -32,6 +37,8 @@ func (sl *SinglyLinkedList) Insert(v any) {
 	sl.length++
 }
 
+// InsertAt inserts a newly created node at the specified
+// index.
 func (sl *SinglyLinkedList) InsertAt(index int, v any){
 	if index == 0 {
 		sl.Insert(v)
@@ -47,6 +54,8 @@ func (sl *SinglyLinkedList) InsertAt(index int, v any){
 	sl.length++
 }
 
+// Append appends a newly created node at the tail of
+// the linked list.
 func (sl *SinglyLinkedList) Append(v any){
 	if sl.head == nil {
 		sl.Insert(v)
@@ -60,13 +69,16 @@ func (sl *SinglyLinkedList) Append(v any){
 	t.next = n
 }
 
+// Clear empties the linked list by setting the head to
+// nil and resetting the length. The garbage collector will
+// notice there is no reference to other nodes and free their memory.
 func (sl *SinglyLinkedList) Clear() {
-	// the garbage collector will notice there is no
-	// reference to other nodes and free their memory.
 	sl.head = nil
 	sl.length = 0
 }
 
+// Find returns the first node that matches the value passed as argument.
+// It returns an error if the node could not be found.
 func (sl *SinglyLinkedList) Find(v any) (*Node, error) {
 	if sl.head == nil {
 		return nil, errors.New("empty linked list")
@@ -81,22 +93,23 @@ func (sl *SinglyLinkedList) Find(v any) (*Node, error) {
 	return nil, errors.New("did not find node")
 }
 
-func (sl *SinglyLinkedList) Print() string {
-	if sl.head == nil {
-		return "[]"
-	}
-	s := strings.Builder{}
-	var t *Node
+// Print prints the linked list to the standard output.
+func (sl *SinglyLinkedList) Print() {
+	fmt.Print("[")
+	for t := sl.head; t != nil; t = t.next {
+		
+		fmt.Print(t.data)
 
-	s.WriteString("[")
-	for t = sl.head; t.next != nil; t = t.next {
-		s.WriteString(t.data.(string))
-		s.WriteString(", ")
+		if t.next != nil {
+			fmt.Print(", ")
+		}
 	}
-	s.WriteString(fmt.Sprintf("%v]",t.data))
-	return s.String()
+	fmt.Print("]\n")
 }
 
+// Remove removes a specified node from the linked list.
+// it returns an error if list is empty or the node could
+// not be found.
 func (sl *SinglyLinkedList) Remove(node *Node) error{
 	if sl.head == nil {
 		return errors.New("cannot remove empty list")
@@ -120,14 +133,17 @@ func (sl *SinglyLinkedList) Remove(node *Node) error{
 	return errors.New("node could not be found")
 }
 
+// IsEmpty returns if the linked list is empty
 func (sl *SinglyLinkedList) IsEmpty() bool{
 	return sl.length == 0
 }
 
+// Size returns the current size of the linked list
 func (sl *SinglyLinkedList) Size() int {
 	return sl.length
 }
 
+// ToArray returns a slice of all elements in the linked list.
 func (sl *SinglyLinkedList) ToArray() []any {
 	s := make([]any, sl.length)
 
@@ -137,6 +153,8 @@ func (sl *SinglyLinkedList) ToArray() []any {
 	return s
 }
 
+// Clone creates a deep copy of all elements in the 
+// linked list.
 func (sl *SinglyLinkedList) Clone() *SinglyLinkedList {
 	l := New()
 
@@ -146,6 +164,9 @@ func (sl *SinglyLinkedList) Clone() *SinglyLinkedList {
 	return l
 }
 
+// GetAtPosition returns the element stored at the specified position.
+// An error is returned if the list is empty or element could not be
+// found at the position requested.
 func (sl *SinglyLinkedList) GetAtPosition(index int) (any, error) {
 	//nil
 	if sl.head == nil {
@@ -162,6 +183,7 @@ func (sl *SinglyLinkedList) GetAtPosition(index int) (any, error) {
 	return nil, errors.New("did not find data at position requested")
 }
 
+// GetFront returns the element at the front of the linked list.
 func (sl *SinglyLinkedList) GetFront() any {
 	if sl.head != nil {
 		return sl.head.data
@@ -169,6 +191,7 @@ func (sl *SinglyLinkedList) GetFront() any {
 	return nil
 }
 
+// GetLast returns the last element in the linked list
 func (sl *SinglyLinkedList) GetLast() any {
 	
 	for t := sl.head; t != nil; t = t.next {
