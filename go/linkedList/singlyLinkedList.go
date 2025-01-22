@@ -215,3 +215,14 @@ func (sl *SinglyLinkedList) Contains(v any) bool {
 	}
 	return false
 }
+
+// Concatenate concatenates the passed parameter list to the given 
+// linked list
+func (sl *SinglyLinkedList) Concatenate(ll *SinglyLinkedList) {
+	for t := sl.head; t != nil; t = t.next {
+		if t.next == nil {
+			t.next = ll.head
+			break
+		}
+	}
+}

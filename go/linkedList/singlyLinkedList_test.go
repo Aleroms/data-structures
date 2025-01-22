@@ -141,6 +141,24 @@ func TestToArray(t *testing.T) {
 func TestClone(t *testing.T) {
 	
 }
+
+func TestConcatenate(t *testing.T){
+	l1 := New()
+	l1.Insert(3)
+	l1.Insert(3)
+	l1.Insert(3)
+	l2 := New()
+	l2.Insert(2)
+	l2.Insert(2)
+	l2.Insert(2)
+	l1.Concatenate(l2)
+
+	l1.Print()
+
+	if expect, got := 2, l1.GetLast(); expect != got {
+		t.Errorf("expected %v, got %v\n", expect, got)
+	}
+}
 func TestGetAtPosition(t *testing.T) {
 	sc := "san clemente"
 	sb := "san bernardino"
