@@ -67,6 +67,7 @@ func (sl *SinglyLinkedList) Append(v any){
 	}
 	n := &Node{v, nil}
 	t.next = n
+	sl.length++
 }
 
 // Clear empties the linked list by setting the head to
@@ -145,12 +146,13 @@ func (sl *SinglyLinkedList) Size() int {
 
 // ToArray returns a slice of all elements in the linked list.
 func (sl *SinglyLinkedList) ToArray() []any {
-	s := make([]any, sl.length)
-
-	for t := sl.head; t != nil; t = t.next {
-		s = append(s, t.data)
-	}
-	return s
+    s := make([]any, sl.length)
+    i := 0
+    for t := sl.head; t != nil; t = t.next {
+        s[i] = t.data // Assign data directly to the pre-allocated slice
+        i++
+    }
+    return s
 }
 
 // Clone creates a deep copy of all elements in the 
@@ -201,4 +203,15 @@ func (sl *SinglyLinkedList) GetLast() any {
 		}
 	}
 	return nil 
+}
+
+// Contains returns a boolean if the element is found in the linked list
+func (sl *SinglyLinkedList) Contains(v any) bool {
+
+	for t := sl.head; t != nil; t = t.next {
+		if (t.data == v){
+			return true
+		}
+	}
+	return false
 }
