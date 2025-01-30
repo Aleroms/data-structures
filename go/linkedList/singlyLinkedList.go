@@ -12,13 +12,6 @@ type SinglyLinkedList struct {
 	length int
 }
 
-// Node struct has a data any type and
-// next pointer
-type Node struct {
-	data any
-	next *Node
-}
-
 // New returns a newly created singly linked list
 // with default values.
 func New() *SinglyLinkedList {
@@ -74,8 +67,16 @@ func (sl *SinglyLinkedList) Append(v any){
 // nil and resetting the length. The garbage collector will
 // notice there is no reference to other nodes and free their memory.
 func (sl *SinglyLinkedList) Clear() {
-	sl.head = nil
+	
+	t := sl.head
+	for n := t.next; n != nil; n = n.next {
+		t = nil
+		t = n
+	}
+	
 	sl.length = 0
+
+
 }
 
 // Find returns the first node that matches the value passed as argument.
@@ -182,7 +183,7 @@ func (sl *SinglyLinkedList) GetAtPosition(index int) (any, error) {
 		}
 		t = t.next
 	}
-	return nil, errors.New("did not find data at position requested")
+	return nil, errors.New("did not find element")
 }
 
 // GetFront returns the element at the front of the linked list.
@@ -217,7 +218,7 @@ func (sl *SinglyLinkedList) Contains(v any) bool {
 }
 
 // Concatenate concatenates the passed parameter list to the given 
-// linked list
+// linked list. increases length.
 func (sl *SinglyLinkedList) Concatenate(ll *SinglyLinkedList) {
 	for t := sl.head; t != nil; t = t.next {
 		if t.next == nil {
@@ -225,4 +226,5 @@ func (sl *SinglyLinkedList) Concatenate(ll *SinglyLinkedList) {
 			break
 		}
 	}
+	sl.length += ll.length
 }
