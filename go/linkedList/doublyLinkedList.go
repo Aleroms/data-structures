@@ -5,10 +5,12 @@ import (
 	"fmt"
 )
 
+// DoublyLinkedList represents a doubly linked list with a head and tail pointer.
 type DoublyLinkedList struct {
-	length        int
-	head, tail *Node2
+    length      int
+    head, tail *Node2
 }
+
 
 // New returns a newly created doubly linked list
 // with default values.

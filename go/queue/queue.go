@@ -2,16 +2,19 @@ package queue
 
 import "errors"
 
+// Node represents a single element in the linked list-based queue.
 type Node struct {
     data any
     next *Node
 }
 
+// Queue represents a linked list-based queue data structure.
 type Queue struct {
     front, rear *Node
-    length  int
+    length      int
 }
 
+// NewQueue creates and returns an empty queue.
 func NewQueue() *Queue {
     return &Queue{
         front: nil,
@@ -54,6 +57,22 @@ func (q *Queue) Peek() any {
     }
     return nil
 }
+
+// PeekFront returns the front element without removing it. This method returns
+// nil if the queue is empty
+func (q *Queue) PeekFront() any {
+    return q.Peek()
+}
+
+// PeekRear returns the rear element without removing it. This method returns
+// nil if the queue is empty
+func (q *Queue) PeekRear() any {
+    if q.rear != nil {
+        return q.rear.data
+    }
+    return nil
+}
+
 
 // IsEmpty checks if the queue is empty
 func (q *Queue) IsEmpty() bool {
