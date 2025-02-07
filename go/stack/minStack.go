@@ -44,28 +44,11 @@ func (ms *MinStack) Peek() (int, error) {
 		return -1, errors.New("cannot peek on empty stack")
 	}
 
-	fmt.Println(ms.top.data, ms.minElement)
 	if ms.top.data < ms.minElement {
 		return ms.minElement, nil
 	}
 	return ms.top.data, nil
 }
-
-// func (ms *MinStack) Push(v int) {
-// 	n := &NodeInt{v,nil}
-
-// 	// initialize minimum element
-// 	if ms.IsEmpty(){
-// 		ms.minElement = v
-// 	}else if v < ms.minElement{ // update new minimum element.
-// 		n.data = 2 * v - ms.minElement
-// 	}
-
-// 	// push onto stack
-// 	n.prev = ms.top
-// 	ms.top = n
-// 	ms.length++
-// }
 
 // Push adds an element to the top of the stack and updates the minimum element.
 func (ms *MinStack) Push(v int) {
