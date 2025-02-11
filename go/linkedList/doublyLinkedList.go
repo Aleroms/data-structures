@@ -81,7 +81,6 @@ func (dl *DoublyLinkedList) InsertAt(index int, v any) {
 	} else {
 
 		t := dl.tail
-		fmt.Println(t.data, "tail")
 		for i := index; i < -1; i++ {
 			t = t.prev
 		}
