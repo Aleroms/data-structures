@@ -1,6 +1,9 @@
 package hashtable
 
-import "errors"
+import (
+	"errors"
+	"fmt"
+)
 
 type Entry struct {
 	key   string
@@ -31,6 +34,14 @@ func (h *Hashtable) hash(key string) int {
 	return hash % h.size
 }
 
+func (h *Hashtable) rehash(key string, newSize int) int {
+	hash := 0
+	prime := 31
+	for _, rn := range key {
+		hash = prime*hash + int(rn)
+	}
+	return hash % newSize
+}
 
 func (h *Hashtable) Insert(key string, value any) {
 
@@ -115,12 +126,29 @@ func (h *Hashtable) resize() {
 
 		for _, bucket := range h.buckets {
 			for t := bucket; t != nil; t = t.next {
-				newIdx := h.hash(t.key) % newSize
+				newIdx := h.rehash(t.key, newSize) 
 				newEntry := &Entry{key: t.key, value: t.value, next: newBuckets[newIdx]}
 				newBuckets[newIdx] = newEntry
 			}
 		}
 		h.buckets = newBuckets
 		h.size = newSize
+	}
+}
+
+func (h *Hashtable) Print() {
+	for idx, bucket := range h.buckets {
+		if bucket != nil {
+			fmt.Printf("[%d]:",idx)
+			for t := bucket; t != nil; t = t.next {
+				fmt.Printf(" %v=%v ",t.key,t.value)
+				if t.next != nil {
+					fmt.Print("-->")
+				}
+			}
+			fmt.Println()
+		}
+		
+		
 	}
 }
