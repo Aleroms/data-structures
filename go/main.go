@@ -1,14 +1,13 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	linkedlist "github.com/Aleroms/data-structures/go/linkedList"
+)
 
 func main(){
-	s := make([]int, 5,6)
-	fmt.Println(len(s), cap(s))
-	for i:= 0; i < len(s); i++ {
-		s[i] = -1
-	}
-	fmt.Println(len(s), cap(s))
-	s = append(s, -2,-3)
-	fmt.Println(len(s), cap(s))
+
+	l := linkedlist.New2()
+	fmt.Println(l)
 }
