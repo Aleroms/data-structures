@@ -33,7 +33,7 @@ This folder contains implementations of various data structures in the Go progra
 ## **Contributing**
 If you'd like to contribute to the Go implementations:
 1. Ensure your code is idiomatic Go and adheres to best practices.
-2. Write comments and provide examples in the `main` function where applicable.
+2. Write comments and provide test files where applicable.
 3. Submit a pull request with clear details about your implementation.
 
 ---
