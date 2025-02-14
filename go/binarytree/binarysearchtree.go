@@ -78,6 +78,46 @@ func (b *BinarySearchTree) searchHelper(v int, n *Node) bool {
 	}
 }
 
+func (b *BinarySearchTree) Delete(v int) {
+	b.root = b.deleteHelper(v, b.root)
+}
+func (b *BinarySearchTree) deleteHelper(v int, n *Node) *Node{
+	if n == nil {
+		return nil
+	}
+	
+	if v > n.data {
+		n.right = b.deleteHelper(v, n.right)
+	} else if v < n.data {
+		n.left = b.deleteHelper(v, n.left)
+	} else {
+		// found node to delete
+
+		// case 1 - no children
+		if n.left == nil && n.right == nil {
+			return nil
+		} else if n.right == nil {
+			// case 2 - one child
+			return n.left
+		} else if n.left == nil {
+			// case 2 - one child
+			return n.right
+		} else {
+			// case 3 - two children
+			// get in-order successor
+			tmp := n.right
+			for tmp .left != nil {
+				tmp = tmp.left
+			}
+
+			n.data = tmp.data
+			n.right = b.deleteHelper(tmp.data, n.right)
+		}
+	}
+	return n
+}
+
+
 func (b *BinarySearchTree) InorderTraversal() {
 	fmt.Print("[ ")
 	b.inorderHelper(b.root)

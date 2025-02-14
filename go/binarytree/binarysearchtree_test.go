@@ -1,7 +1,6 @@
 package binarytree
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -79,7 +78,7 @@ func TestSearch(t *testing.T){
 	if expect, got := false, n.Search(6); expect != got {
 		t.Errorf("expected %v, got %v\n", expect, got)
 	}
-	fmt.Println("---")
+
 	n.Insert(6)
 	n.Insert(3)
 	n.Insert(0)
@@ -90,16 +89,51 @@ func TestSearch(t *testing.T){
 	if expect, got := false, n.Search(20); expect != got {
 		t.Errorf("expected %v, got %v\n", expect, got)
 	}
-	fmt.Println("---")
+
 	// in BST
 	if expect, got := true, n.Search(0); expect != got {
 		t.Errorf("expected %v, got %v\n", expect, got)
 	}
-	fmt.Println("---")
+
 	if expect, got := true, n.Search(4); expect != got {
 		t.Errorf("expected %v, got %v\n", expect, got)
 	}
 
+}
+
+func TestDelete(t *testing.T) {
+	n := NewBST()
+	d := []int{6,3,0,9,4}
+	for _ , v := range d {
+		n.Insert(v)
+	}
+
+	// delete leaf
+	n.Delete(4)
+	if expect, got := false, n.Search(4); expect != got {
+		t.Errorf("expected %v, got %v\n", expect, got)
+	}
+	
+
+	// delete one child
+	n.Delete(3)
+	if expect, got := false, n.Search(3); expect != got {
+		t.Errorf("expected %v, got %v\n", expect, got)
+	}
+
+	// make sure 6 (root) points to 0
+	if expect, got := 0, n.root.left.data; expect != got {
+		t.Errorf("expected %v, got %v\n", expect, got)
+	}
+
+	n.Insert(7)
+	n.Insert(10)
+
+	// delete two children
+	n.Delete(9)
+	if expect, got := false, n.Search(9); expect != got {
+		t.Errorf("expected %v, got %v\n", expect, got)
+	}
 }
 // func TestInorderTraversal(t *testing.T) {
 // 	n := NewBST()
