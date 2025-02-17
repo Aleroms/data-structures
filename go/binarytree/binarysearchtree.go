@@ -3,6 +3,8 @@ package binarytree
 import (
 	"fmt"
 	"math"
+
+	"github.com/Aleroms/data-structures/go/queue"
 )
 
 type Node struct {
@@ -17,9 +19,8 @@ func NewBST() *BinarySearchTree {
 	return &BinarySearchTree{nil}
 }
 
-// search delete
-// levelorder
-// find min find max height isBalanced
+
+// isBalanced
 
 func (b *BinarySearchTree) Insert(v int) {
 	b.root = b.insertHelper(v, b.root)
@@ -60,20 +61,16 @@ func (b *BinarySearchTree) Search(v int) bool {
 
 func (b *BinarySearchTree) searchHelper(v int, n *Node) bool {
 	if n == nil {
-		fmt.Println("| false |")
 		return false
 	}
 	
 	if v == n.data {
-		fmt.Println("| true |")
 		return true
 	}
 
 	if v > n.data {
-		fmt.Printf("| %d | going right\n",n.data)
 		return b.searchHelper(v, n.right)
 		} else {
-		fmt.Printf("| %d | going left\n",n.data)
 		return b.searchHelper(v, n.left)
 	}
 }
@@ -105,16 +102,51 @@ func (b *BinarySearchTree) deleteHelper(v int, n *Node) *Node{
 		} else {
 			// case 3 - two children
 			// get in-order successor
-			tmp := n.right
-			for tmp .left != nil {
-				tmp = tmp.left
-			}
+			tmp := b.GetSuccessor(n)
 
 			n.data = tmp.data
 			n.right = b.deleteHelper(tmp.data, n.right)
 		}
 	}
 	return n
+}
+
+func (b *BinarySearchTree) GetSuccessor(n *Node) *Node {
+	tmp := n.right
+	for tmp.left != nil {
+		tmp = tmp.left
+	}
+	return tmp
+}
+
+func (b *BinarySearchTree) GetPredecessor(n *Node) *Node {
+	tmp := n.left
+	for tmp.right != nil {
+		tmp = tmp.right
+	}
+	return tmp
+}
+
+func (b *BinarySearchTree) FindMin() int {
+	if b.root == nil {
+		return -1
+	}
+	t := b.root
+	for t.left != nil {
+		t = t.left
+	} 
+	return t.data
+}
+
+func (b *BinarySearchTree) FindMax() int {
+	if b.root == nil {
+		return -1
+	}
+	t := b.root
+	for t.right != nil {
+		t = t.right
+	} 
+	return t.data
 }
 
 
@@ -161,4 +193,34 @@ func (b *BinarySearchTree) postorderHelper(n *Node){
 	b.preorderHelper(n.left)
 	b.preorderHelper(n.right)	
 	fmt.Printf("%v ", n.data)
+}
+
+func (b *BinarySearchTree) LevelOrderTraversal(){
+	if b.root == nil {
+		fmt.Println("[]")
+		return
+	}
+
+	q := queue.NewQueue()
+	q.Enqueue(b.root)
+
+	fmt.Print("[")
+	for !q.IsEmpty() {
+		t := q.PeekFront()
+		n := t.(*Node)
+
+		fmt.Printf(" %v ",n.data)
+		
+
+		if n.left != nil {
+			q.Enqueue(n.left)
+		}
+		if n.right != nil {
+			q.Enqueue(n.right)
+		}
+		q.Dequeue()
+		
+	}
+	fmt.Println("]")
+	
 }

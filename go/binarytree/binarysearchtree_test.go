@@ -135,26 +135,92 @@ func TestDelete(t *testing.T) {
 		t.Errorf("expected %v, got %v\n", expect, got)
 	}
 }
-// func TestInorderTraversal(t *testing.T) {
-// 	n := NewBST()
-// 	n.Insert(2)
-// 	n.Insert(3)
-// 	n.Insert(1)
-// 	n.InorderTraversal()
-// }
+func TestInorderTraversal(t *testing.T) {
+	n := NewBST()
+	n.Insert(2)
+	n.Insert(3)
+	n.Insert(1)
+	n.InorderTraversal()
+}
 
-// func TestPreorderTraversal(t *testing.T) {
-// 	n := NewBST()
-// 	n.Insert(2)
-// 	n.Insert(3)
-// 	n.Insert(1)
-// 	n.PreorderTraversal()
-// }
+func TestPreorderTraversal(t *testing.T) {
+	n := NewBST()
+	n.Insert(2)
+	n.Insert(3)
+	n.Insert(1)
+	n.PreorderTraversal()
+}
 
-// func TestPostorderTraversal(t *testing.T) {
-// 	n := NewBST()
-// 	n.Insert(2)
-// 	n.Insert(3)
-// 	n.Insert(1)
-// 	n.PostorderTraversal()
-// }
+func TestPostorderTraversal(t *testing.T) {
+	n := NewBST()
+	n.Insert(2)
+	n.Insert(3)
+	n.Insert(1)
+	n.PostorderTraversal()
+}
+
+func TestLevelOrderTraversal(t *testing.T) {
+	n := NewBST()
+	n.Insert(10)
+	n.Insert(5)
+	n.Insert(15)
+	n.Insert(12)
+	n.Insert(20)
+	n.LevelOrderTraversal()
+}
+
+func TestFindMin(t *testing.T) {
+	n := NewBST()
+	n.Insert(10)
+	n.Insert(5)
+	n.Insert(15)
+	n.Insert(12)
+	n.Insert(20)
+
+	if expect, got:= 5, n.FindMin(); expect != got {
+		t.Errorf("expected %v, got %v\n", expect, got)
+	}
+}
+
+func TestFindMax(t *testing.T) {
+	n := NewBST()
+	n.Insert(10)
+	n.Insert(5)
+	n.Insert(15)
+	n.Insert(12)
+	n.Insert(20)
+
+	if expect, got:= 20, n.FindMax(); expect != got {
+		t.Errorf("expected %v, got %v\n", expect, got)
+	}
+}
+
+func TestGetSuccessor(t *testing.T) {
+	n := NewBST()
+	n.Insert(10)
+	n.Insert(5)
+	n.Insert(15)
+	n.Insert(12)
+	n.Insert(20)
+
+	s := n.GetSuccessor(n.root.right)
+	
+	if expect, got := 20, s.data; expect != got {
+		t.Errorf("expected %v, got %v\n", expect, got)
+	}
+}
+
+func TestGetPredecessor(t *testing.T) {
+	n := NewBST()
+	n.Insert(10)
+	n.Insert(5)
+	n.Insert(15)
+	n.Insert(12)
+	n.Insert(20)
+
+	s := n.GetPredecessor(n.root.right)
+	
+	if expect, got := 12, s.data; expect != got {
+		t.Errorf("expected %v, got %v\n", expect, got)
+	}
+}
