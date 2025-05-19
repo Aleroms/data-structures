@@ -3,9 +3,11 @@
 This folder contains implementations of various data structures in the Go programming language.
 
 ## **Implemented Data Structures**
-- [Stack](./stack.go)
-- [Queue](./queue.go)
-- [Linked List](./linked_list.go)
+- [Stack](./stack/)
+- [Queue](./queue/)
+- [Linked List](./linkedList/)
+- [Hash Table](./hashtable/)
+- [Binary Search Tree](./binarytree/)
 
 ---
 

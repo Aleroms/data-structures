@@ -1,13 +1,7 @@
 package main
 
-import (
-	"fmt"
-
-	linkedlist "github.com/Aleroms/data-structures/go/linkedList"
-)
+import "fmt"
 
 func main(){
-
-	l := linkedlist.New2()
-	fmt.Println(l)
+	fmt.Println(1)
 }
